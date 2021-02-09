@@ -31,4 +31,20 @@ public class Main {
 
         return dataFilePath;
     }
+
+	public static void printDefault() {
+		System.out.println("Your contact list is currently empty. Add some contacts!");
+		System.out.println("Choose an option by entering a number:");
+		System.out.println("1. Add a new contact.");
+		System.out.println("2. Exit.");
+	}
+
+	public static void printMenu() {
+		System.out.println("Choose an option by entering a number:");
+		System.out.println("1. View contacts.");
+		System.out.println("2. Add a new contact.");
+		System.out.println("3. Search a contact by name.");
+		System.out.println("4. Delete an existing contact.");
+		System.out.println("5. Exit.");
+	}
 }

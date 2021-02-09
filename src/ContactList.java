@@ -3,8 +3,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class ContactList {
 	private List<Contact> contactList = new ArrayList<>();
+
 	public ContactList(Path contactFilePath) {
 		try (Scanner scanner = new Scanner(Paths.get(String.valueOf(contactFilePath)))) {
 			while (scanner.hasNextLine()) {
@@ -18,9 +20,11 @@ public class ContactList {
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
+
 	public List<Contact> getContactList() {
 		return contactList;
 	}
+
 	public void printContacts() {
 		System.out.printf("%-15s | %-15s%n", "Name", "Phone");
 		System.out.println("---------------------------------");
@@ -30,6 +34,7 @@ public class ContactList {
 		System.out.println("---------------------------------");
 		System.out.println();
 	}
+
 	public void createNewContact() {
 		Scanner scanner = new Scanner(System.in);
 		label:
@@ -62,6 +67,7 @@ public class ContactList {
 			}
 		}
 	}
+
 	public void searchContacts() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Please enter the name to search.");
@@ -87,6 +93,7 @@ public class ContactList {
 		System.out.println("Press enter to continue.");
 		scanner.nextLine();
 	}
+
 	public void deleteContact() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Please enter the name of the contact to delete:");
@@ -152,6 +159,7 @@ public class ContactList {
 			}
 		}
 	}
+
 	public List<String> makeStringList() {
 		List<String> stringList = new ArrayList<>();
 		for (Contact contact : this.contactList) {

@@ -73,28 +73,27 @@ public class ContactList {
 
 	public void searchSelection() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("How would you like to search?");
-		System.out.println("1. Search by first name.");
-		System.out.println("2. Search by last name.");
-		System.out.println("3. Search by phone number.");
-		System.out.println("4. Exit search menu.");
-		String selection = scanner.nextLine();
-
-
 		label:
 		while (true) {
+			System.out.println("How would you like to search?");
+			System.out.println("1. Search by first name.");
+			System.out.println("2. Search by last name.");
+			System.out.println("3. Search by phone number.");
+			System.out.println("4. Exit search menu.");
+			String selection = scanner.nextLine();
+
+
 			switch (selection) {
 				case "1":
-					//firstNameSearch();
+					firstNameSearch();
 					break label;
 				case "2":
-					//lastNameSearch();
+					lastNameSearch();
 					break label;
 				case "3":
-					//phoneNumberSearch();
+					numberSearch();
 					break label;
 				case "4":
-					//break;
 					break label;
 				default:
 					System.out.println("That is not a valid option. Please try again.");
@@ -132,15 +131,40 @@ public class ContactList {
 		scanner.nextLine();
 	}
 
-	/*
-	public void searchContacts() {
+	public void lastNameSearch() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please enter the name to search.");
+		System.out.println("Please enter the last name to search.");
 		String nameToSearch = scanner.nextLine();
 		int numberOfContacts = 0;
 		ArrayList<Contact> foundContacts = new ArrayList<>();
 		for (Contact contact : this.contactList) {
-			if (contact.getName().equalsIgnoreCase(nameToSearch)) {
+			if (contact.getLastName().equalsIgnoreCase(nameToSearch)) {
+				numberOfContacts++;
+				foundContacts.add(contact);
+			}
+		}
+		if (numberOfContacts == 0) {
+			System.out.println("No contacts found with that name. Please try again.");
+		} else {
+			System.out.printf("%d contacts found.%n", numberOfContacts);
+			for (Contact contact : foundContacts) {
+				System.out.println("Name: " + contact.getFullName());
+				System.out.println("Number: " + contact.getNumber());
+				System.out.println("---");
+			}
+		}
+		System.out.println("Press enter to continue.");
+		scanner.nextLine();
+	}
+
+	public void numberSearch() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the number to search.");
+		String numberToSearch = scanner.nextLine();
+		int numberOfContacts = 0;
+		ArrayList<Contact> foundContacts = new ArrayList<>();
+		for (Contact contact : this.contactList) {
+			if (contact.getNumber().equals(numberToSearch)) {
 				numberOfContacts++;
 				foundContacts.add(contact);
 			}
@@ -150,7 +174,7 @@ public class ContactList {
 		} else {
 			System.out.printf("%d contacts found.%n", numberOfContacts);
 			for (Contact contact : foundContacts) {
-				System.out.println("Name: " + contact.getName());
+				System.out.println("Name: " + contact.getFullName());
 				System.out.println("Number: " + contact.getNumber());
 				System.out.println("---");
 			}
@@ -159,8 +183,6 @@ public class ContactList {
 		scanner.nextLine();
 	}
 
-
-	 */
 
 	public void deleteContact() {
 		Scanner scanner = new Scanner(System.in);

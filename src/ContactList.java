@@ -62,14 +62,6 @@ public class ContactList {
 				for (int i = 0; i < newNumber.length(); i++) {
 					numberCount.add(newNumber.charAt(i));
 				}
-				try {
-					int numberCheck = Integer.parseInt(newNumber);
-				} catch (NumberFormatException e) {
-					System.out.println("That is not a valid number.");
-					System.out.println("Numbers must contain no spaces or special characters.");
-					System.out.println("Press enter to continue.");
-					scanner.nextLine();
-				}
 
 				if ((numberCount.size() == 10 || numberCount.size() == 7) && newNumber.matches("^[0-9]+$")) {
 					if (newNumber.length() == 7) {
@@ -81,7 +73,7 @@ public class ContactList {
 
 				} else {
 					System.out.println("That is not a valid number.");
-					System.out.println("Numbers must be 7 or 10 digits long.");
+					System.out.println("Numbers must be 7 or 10 digits long and contain no spaces or special characters.");
 					System.out.println("Press enter to continue.");
 					scanner.nextLine();
 				}

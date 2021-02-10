@@ -50,7 +50,7 @@ public class Main {
                             contacts.createNewContact();
                             break;
                         case "3":
-                            contacts.searchContacts();
+                            contacts.searchSelection();
                             break;
                         case "4":
                             contacts.deleteContact();

@@ -1,19 +1,25 @@
 public class Contact {
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String number;
 
-    public Contact(String name, String number) {
-        this.name = name;
+    public Contact(String firstName, String lastName, String number) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.number = number;
     }
 
-    public String getName() {
-        return this.name;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getNumber() {

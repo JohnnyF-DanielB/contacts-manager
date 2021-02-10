@@ -27,12 +27,19 @@ public class ContactList {
 	}
 
 	public void printContacts() {
-		System.out.printf("%-15s | %-15s%n", "Name", "Phone");
-		System.out.println("---------------------------------");
+		System.out.printf("%-40s | %-40s%n", "Name", "Phone");
+		System.out.println("--------------------------------------------------------------------------------");
 		for (Contact contact : this.contactList) {
-			System.out.printf("%-15s %s | %-15s%n", contact.getFirstName(), contact.getLastName(), contact.getNumber());
+			String unformattedNumber = contact.getNumber();
+			String formattedNumber;
+			if (unformattedNumber.length() == 7) {
+				formattedNumber = unformattedNumber.substring(0, 3) + "-" + unformattedNumber.substring(3);
+			} else {
+				formattedNumber = "(" + unformattedNumber.substring(0, 3) + ") " + unformattedNumber.substring(3, 6) + "-" + unformattedNumber.substring(6);
+			}
+			System.out.printf("%-40s | %-40s%n", contact.getFullName(), formattedNumber);
 		}
-		System.out.println("---------------------------------");
+		System.out.println("--------------------------------------------------------------------------------");
 		System.out.println();
 	}
 
@@ -44,10 +51,45 @@ public class ContactList {
 			String newFirstName = scanner.nextLine();
 			System.out.println("What is their last name?");
 			String newLastName = scanner.nextLine();
-			System.out.println("What is their number?");
-			String newNumber = scanner.nextLine();
+
+			String newNumber;
+			String formattedNumber;
+
 			while (true) {
-				System.out.printf("New contact: %s %s, %s%n", newFirstName, newLastName, newNumber);
+				System.out.println("What is their number? No spaces or other symbols. Numbers only, please.");
+				newNumber = scanner.nextLine();
+				ArrayList<Character> numberCount = new ArrayList<>();
+				for (int i = 0; i < newNumber.length(); i++) {
+					numberCount.add(newNumber.charAt(i));
+				}
+				try {
+					int numberCheck = Integer.parseInt(newNumber);
+				} catch (NumberFormatException e) {
+					System.out.println("That is not a valid number.");
+					System.out.println("Numbers must contain no spaces or special characters.");
+					System.out.println("Press enter to continue.");
+					scanner.nextLine();
+				}
+
+				if ((numberCount.size() == 10 || numberCount.size() == 7) && newNumber.matches("^[0-9]+$")) {
+					if (newNumber.length() == 7) {
+						formattedNumber = newNumber.substring(0, 3) + "-" + newNumber.substring(3);
+					} else {
+						formattedNumber = "(" + newNumber.substring(0, 3) + ") " + newNumber.substring(3, 6) + "-" + newNumber.substring(6);
+					}
+					break;
+
+				} else {
+					System.out.println("That is not a valid number.");
+					System.out.println("Numbers must be 7 or 10 digits long.");
+					System.out.println("Press enter to continue.");
+					scanner.nextLine();
+				}
+			}
+
+
+			while (true) {
+				System.out.printf("New contact: %s %s, %s%n", newFirstName, newLastName, formattedNumber);
 				System.out.println("1. Confirm adding new contact.");
 				System.out.println("2. Cancel adding new contact.");
 				String confirm = scanner.nextLine();
@@ -122,8 +164,15 @@ public class ContactList {
 		} else {
 			System.out.printf("%d contacts found.%n", numberOfContacts);
 			for (Contact contact : foundContacts) {
+				String unformattedNumber = contact.getNumber();
+				String formattedNumber;
+				if (unformattedNumber.length() == 7) {
+					formattedNumber = unformattedNumber.substring(0, 3) + "-" + unformattedNumber.substring(3);
+				} else {
+					formattedNumber = "(" + unformattedNumber.substring(0, 3) + ") " + unformattedNumber.substring(3, 6) + "-" + unformattedNumber.substring(6);
+				}
 				System.out.println("Name: " + contact.getFullName());
-				System.out.println("Number: " + contact.getNumber());
+				System.out.println("Number: " + formattedNumber);
 				System.out.println("---");
 			}
 		}
@@ -148,8 +197,15 @@ public class ContactList {
 		} else {
 			System.out.printf("%d contacts found.%n", numberOfContacts);
 			for (Contact contact : foundContacts) {
+				String unformattedNumber = contact.getNumber();
+				String formattedNumber;
+				if (unformattedNumber.length() == 7) {
+					formattedNumber = unformattedNumber.substring(0, 3) + "-" + unformattedNumber.substring(3);
+				} else {
+					formattedNumber = "(" + unformattedNumber.substring(0, 3) + ") " + unformattedNumber.substring(3, 6) + "-" + unformattedNumber.substring(6);
+				}
 				System.out.println("Name: " + contact.getFullName());
-				System.out.println("Number: " + contact.getNumber());
+				System.out.println("Number: " + formattedNumber);
 				System.out.println("---");
 			}
 		}
@@ -159,7 +215,7 @@ public class ContactList {
 
 	public void numberSearch() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please enter the number to search.");
+		System.out.println("Please enter the number to search. No spaces or special characters. Numbers only please.");
 		String numberToSearch = scanner.nextLine();
 		int numberOfContacts = 0;
 		ArrayList<Contact> foundContacts = new ArrayList<>();
@@ -174,8 +230,15 @@ public class ContactList {
 		} else {
 			System.out.printf("%d contacts found.%n", numberOfContacts);
 			for (Contact contact : foundContacts) {
+				String unformattedNumber = contact.getNumber();
+				String formattedNumber;
+				if (unformattedNumber.length() == 7) {
+					formattedNumber = unformattedNumber.substring(0, 3) + "-" + unformattedNumber.substring(3);
+				} else {
+					formattedNumber = "(" + unformattedNumber.substring(0, 3) + ") " + unformattedNumber.substring(3, 6) + "-" + unformattedNumber.substring(6);
+				}
 				System.out.println("Name: " + contact.getFullName());
-				System.out.println("Number: " + contact.getNumber());
+				System.out.println("Number: " + formattedNumber);
 				System.out.println("---");
 			}
 		}
@@ -186,65 +249,64 @@ public class ContactList {
 
 	public void deleteContact() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please enter the name of the contact to delete:");
-		String nameToDelete = scanner.nextLine();
-		int numberOfContacts = 0;
-		ArrayList<Contact> foundContacts = new ArrayList<>();
-		for (Contact contact : this.contactList) {
-			if (contact.getFullName().equalsIgnoreCase(nameToDelete)) {
-				numberOfContacts++;
-				foundContacts.add(contact);
-			}
-		}
-		if (numberOfContacts == 0) {
-			System.out.println("No contacts found.");
-		} else {
-			label:
-			while (true) {
-				System.out.printf("%d contacts were found with that name.%n", numberOfContacts);
-				System.out.println("Please select which contact you wish to delete:");
-				for (int i = 0; i < foundContacts.size(); i++) {
-					System.out.println(i + ". Name: " + foundContacts.get(i).getFullName() + ", Number: " + foundContacts.get(i).getNumber());
-					System.out.println("---");
+		label:
+		while (true) {
+			System.out.println("Please select which contact you wish to delete:");
+			for (int i = 0; i < contactList.size(); i++) {
+				String unformattedNumber = contactList.get(i).getNumber();
+				String formattedNumber;
+				if (unformattedNumber.length() == 7) {
+					formattedNumber = unformattedNumber.substring(0, 3) + "-" + unformattedNumber.substring(3);
+				} else {
+					formattedNumber = "(" + unformattedNumber.substring(0, 3) + ") " + unformattedNumber.substring(3, 6) + "-" + unformattedNumber.substring(6);
 				}
-				while (true) {
-					try {
-						int selectDelete = Integer.parseInt(scanner.nextLine());
-						if (selectDelete < 0 || selectDelete >= foundContacts.size()) {
-							System.out.println("That is not a valid selection. Please try again.");
-							System.out.println("Press enter to continue.");
-							scanner.nextLine();
-						} else {
-							System.out.println("You have selected this contact: ");
-							System.out.println(selectDelete + ". Name: " + foundContacts.get(selectDelete).getFullName() + ", Number: " + foundContacts.get(selectDelete).getNumber());
-							System.out.println("Are you sure you wish to delete this contact?");
-							System.out.println("1. Confirm delete.");
-							System.out.println("2. Cancel delete.");
-							String confirm = scanner.nextLine();
-							if (confirm.equals("1")) {
-								this.contactList.remove(foundContacts.get(selectDelete));
-								System.out.println("Contact successfully deleted.");
-								System.out.println("Press enter to continue.");
-								scanner.nextLine();
-								break label;
-							} else if (confirm.equals("2")) {
-								System.out.println("Canceled deleting contact.");
-								System.out.println("Press enter to continue.");
-								scanner.nextLine();
-								break label;
-							} else {
-								System.out.println("That is not a valid selection. Please try again.");
-								System.out.println("Press enter to continue.");
-								scanner.nextLine();
-								break;
-							}
-						}
-					} catch (NumberFormatException e) {
+				System.out.println(i + ". Name: " + contactList.get(i).getFullName() + ", Number: " + formattedNumber);
+				System.out.println("---");
+			}
+			while (true) {
+				try {
+					int selectDelete = Integer.parseInt(scanner.nextLine());
+					if (selectDelete < 0 || selectDelete >= contactList.size()) {
 						System.out.println("That is not a valid selection. Please try again.");
 						System.out.println("Press enter to continue.");
 						scanner.nextLine();
-						break;
+					} else {
+						String unformattedNumber = contactList.get(selectDelete).getNumber();
+						String formattedNumber;
+						if (unformattedNumber.length() == 7) {
+							formattedNumber = unformattedNumber.substring(0, 3) + "-" + unformattedNumber.substring(3);
+						} else {
+							formattedNumber = "(" + unformattedNumber.substring(0, 3) + ") " + unformattedNumber.substring(3, 6) + "-" + unformattedNumber.substring(6);
+						}
+						System.out.println("You have selected this contact: ");
+						System.out.println(selectDelete + ". Name: " + contactList.get(selectDelete).getFullName() + ", Number: " + formattedNumber);
+						System.out.println("Are you sure you wish to delete this contact?");
+						System.out.println("1. Confirm delete.");
+						System.out.println("2. Cancel delete.");
+						String confirm = scanner.nextLine();
+						if (confirm.equals("1")) {
+							this.contactList.remove(contactList.get(selectDelete));
+							System.out.println("Contact successfully deleted.");
+							System.out.println("Press enter to continue.");
+							scanner.nextLine();
+							break label;
+						} else if (confirm.equals("2")) {
+							System.out.println("Canceled deleting contact.");
+							System.out.println("Press enter to continue.");
+							scanner.nextLine();
+							break label;
+						} else {
+							System.out.println("That is not a valid selection. Please try again.");
+							System.out.println("Press enter to continue.");
+							scanner.nextLine();
+							break;
+						}
 					}
+				} catch (NumberFormatException e) {
+					System.out.println("That is not a valid selection. Please try again.");
+					System.out.println("Press enter to continue.");
+					scanner.nextLine();
+					break;
 				}
 			}
 		}

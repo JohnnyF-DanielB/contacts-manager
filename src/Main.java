@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,6 +27,8 @@ public class Main {
 						contacts.createNewContact();
 						break;
 					} else if (input.equals("2")) {
+						List<String> emptyList = new ArrayList<>(0);
+						saveContacts(filePath, emptyList);
 						System.out.println("Exiting Contacts Manager.");
 						break label;
 					} else {
@@ -99,7 +102,7 @@ public class Main {
 		System.out.println("Choose an option by entering a number:");
 		System.out.println("1. View contacts.");
 		System.out.println("2. Add a new contact.");
-		System.out.println("3. Search a contact by name.");
+		System.out.println("3. Search for contacts.");
 		System.out.println("4. Delete an existing contact.");
 		System.out.println("5. Exit.");
 	}

@@ -27,12 +27,12 @@ public class ContactList {
 	}
 
 	public void printContacts() {
-		System.out.printf("%-15s | %-15s%n", "Name", "Phone");
-		System.out.println("---------------------------------");
+		System.out.printf("%-40s | %-40s%n", "Name", "Phone");
+		System.out.println("--------------------------------------------------------------------------------");
 		for (Contact contact : this.contactList) {
-			System.out.printf("%-15s | %-15s%n", contact.getFullName(), contact.getNumber());
+			System.out.printf("%-40s | %-40s%n", contact.getFullName(), contact.getNumber());
 		}
-		System.out.println("---------------------------------");
+		System.out.println("--------------------------------------------------------------------------------");
 		System.out.println();
 	}
 
